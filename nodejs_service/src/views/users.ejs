@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Users</title>
+</head>
+<body>
+  <h1>User Info</h1>
+  <% if (user) { %>
+    <p>ID: <%= user.id %></p>
+    <p>Name: <%= user.name %></p>
+    <p>Email: <%= user.email %></p>
+  <% } else { %>
+    <p>No user found.</p>
+  <% } %>
+
+  <h2>Create User</h2>
+  <form action="/users" method="POST">
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <button type="submit">Create</button>
+  </form>
+</body>
+</html>
