@@ -40,8 +40,8 @@ User.prototype[Symbol.for("read")] = function(input) {
     }
     switch (fid) {
       case 1:
-      if (ftype == Thrift.Type.I64) {
-        this.id = input.readI64();
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -72,8 +72,8 @@ User.prototype[Symbol.for("read")] = function(input) {
 User.prototype[Symbol.for("write")] = function(output) {
   output.writeStructBegin('User');
   if (this.id !== null && this.id !== undefined) {
-    output.writeFieldBegin('id', Thrift.Type.I64, 1);
-    output.writeI64(this.id);
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
     output.writeFieldEnd();
   }
   if (this.name !== null && this.name !== undefined) {
@@ -84,59 +84,6 @@ User.prototype[Symbol.for("write")] = function(output) {
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 3);
     output.writeString(this.email);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-var UserExistsException = module.exports.UserExistsException = function(args) {
-  Thrift.TException.call(this, "UserExistsException");
-  this.name = "UserExistsException";
-  this.message = null;
-  if (args) {
-    if (args.message !== undefined && args.message !== null) {
-      this.message = args.message;
-    }
-  }
-};
-Thrift.inherits(UserExistsException, Thrift.TException);
-UserExistsException.prototype.name = 'UserExistsException';
-UserExistsException.prototype[Symbol.for("read")] = function(input) {
-  input.readStructBegin();
-  while (true) {
-    var ret = input.readFieldBegin();
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid) {
-      case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.message = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 0:
-        input.skip(ftype);
-        break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-UserExistsException.prototype[Symbol.for("write")] = function(output) {
-  output.writeStructBegin('UserExistsException');
-  if (this.message !== null && this.message !== undefined) {
-    output.writeFieldBegin('message', Thrift.Type.STRING, 1);
-    output.writeString(this.message);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

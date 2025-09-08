@@ -10,14 +10,14 @@ package user_service;
 public class User implements org.apache.thrift.TBase<User, User._Fields>, java.io.Serializable, Cloneable, Comparable<User> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("User");
 
-  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.I64, (short)1);
+  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.I32, (short)1);
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("email", org.apache.thrift.protocol.TType.STRING, (short)3);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new UserStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new UserTupleSchemeFactory();
 
-  public long id; // required
+  public int id; // required
   public @org.apache.thrift.annotation.Nullable java.lang.String name; // required
   public @org.apache.thrift.annotation.Nullable java.lang.String email; // required
 
@@ -96,7 +96,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.EMAIL, new org.apache.thrift.meta_data.FieldMetaData("email", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -109,7 +109,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   }
 
   public User(
-    long id,
+    int id,
     java.lang.String name,
     java.lang.String email)
   {
@@ -147,11 +147,11 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     this.email = null;
   }
 
-  public long getId() {
+  public int getId() {
     return this.id;
   }
 
-  public User setId(long id) {
+  public User setId(int id) {
     this.id = id;
     setIdIsSet(true);
     return this;
@@ -227,7 +227,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (value == null) {
         unsetId();
       } else {
-        setId((java.lang.Long)value);
+        setId((java.lang.Integer)value);
       }
       break;
 
@@ -332,7 +332,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   public int hashCode() {
     int hashCode = 1;
 
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(id);
+    hashCode = hashCode * 8191 + id;
 
     hashCode = hashCode * 8191 + ((isSetName()) ? 131071 : 524287);
     if (isSetName())
@@ -474,8 +474,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         }
         switch (schemeField.id) {
           case 1: // ID
-            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
-              struct.id = iprot.readI64();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.id = iprot.readI32();
               struct.setIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -514,7 +514,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(ID_FIELD_DESC);
-      oprot.writeI64(struct.id);
+      oprot.writeI32(struct.id);
       oprot.writeFieldEnd();
       if (struct.name != null) {
         oprot.writeFieldBegin(NAME_FIELD_DESC);
@@ -556,7 +556,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
       oprot.writeBitSet(optionals, 3);
       if (struct.isSetId()) {
-        oprot.writeI64(struct.id);
+        oprot.writeI32(struct.id);
       }
       if (struct.isSetName()) {
         oprot.writeString(struct.name);
@@ -571,7 +571,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
-        struct.id = iprot.readI64();
+        struct.id = iprot.readI32();
         struct.setIdIsSet(true);
       }
       if (incoming.get(1)) {

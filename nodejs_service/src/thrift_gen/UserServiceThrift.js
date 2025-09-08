@@ -79,17 +79,9 @@ UserServiceThrift_createUser_args.prototype[Symbol.for("write")] = function(outp
 
 var UserServiceThrift_createUser_result = function(args) {
   this.success = null;
-  this.e = null;
-  if (args instanceof ttypes.UserExistsException) {
-    this.e = args;
-    return;
-  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = new ttypes.User(args.success);
-    }
-    if (args.e !== undefined && args.e !== null) {
-      this.e = args.e;
     }
   }
 };
@@ -112,14 +104,9 @@ UserServiceThrift_createUser_result.prototype[Symbol.for("read")] = function(inp
         input.skip(ftype);
       }
       break;
-      case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.e = new ttypes.UserExistsException();
-        this.e[Symbol.for("read")](input);
-      } else {
+      case 0:
         input.skip(ftype);
-      }
-      break;
+        break;
       default:
         input.skip(ftype);
     }
@@ -136,9 +123,335 @@ UserServiceThrift_createUser_result.prototype[Symbol.for("write")] = function(ou
     this.success[Symbol.for("write")](output);
     output.writeFieldEnd();
   }
-  if (this.e !== null && this.e !== undefined) {
-    output.writeFieldBegin('e', Thrift.Type.STRUCT, 1);
-    this.e[Symbol.for("write")](output);
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_getUserById_args = function(args) {
+  this.id = null;
+  if (args) {
+    if (args.id !== undefined && args.id !== null) {
+      this.id = args.id;
+    }
+  }
+};
+UserServiceThrift_getUserById_args.prototype = {};
+UserServiceThrift_getUserById_args.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getUserById_args.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getUserById_args');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_getUserById_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.User(args.success);
+    }
+  }
+};
+UserServiceThrift_getUserById_result.prototype = {};
+UserServiceThrift_getUserById_result.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.User();
+        this.success[Symbol.for("read")](input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getUserById_result.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getUserById_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success[Symbol.for("write")](output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_updateUser_args = function(args) {
+  this.id = null;
+  this.name = null;
+  this.email = null;
+  if (args) {
+    if (args.id !== undefined && args.id !== null) {
+      this.id = args.id;
+    }
+    if (args.name !== undefined && args.name !== null) {
+      this.name = args.name;
+    }
+    if (args.email !== undefined && args.email !== null) {
+      this.email = args.email;
+    }
+  }
+};
+UserServiceThrift_updateUser_args.prototype = {};
+UserServiceThrift_updateUser_args.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.email = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_updateUser_args.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_updateUser_args');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 2);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.email !== null && this.email !== undefined) {
+    output.writeFieldBegin('email', Thrift.Type.STRING, 3);
+    output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_updateUser_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.User(args.success);
+    }
+  }
+};
+UserServiceThrift_updateUser_result.prototype = {};
+UserServiceThrift_updateUser_result.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.User();
+        this.success[Symbol.for("read")](input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_updateUser_result.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_updateUser_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success[Symbol.for("write")](output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_deleteUser_args = function(args) {
+  this.id = null;
+  if (args) {
+    if (args.id !== undefined && args.id !== null) {
+      this.id = args.id;
+    }
+  }
+};
+UserServiceThrift_deleteUser_args.prototype = {};
+UserServiceThrift_deleteUser_args.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_deleteUser_args.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_deleteUser_args');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_deleteUser_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = args.success;
+    }
+  }
+};
+UserServiceThrift_deleteUser_result.prototype = {};
+UserServiceThrift_deleteUser_result.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.BOOL) {
+        this.success = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_deleteUser_result.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_deleteUser_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.BOOL, 0);
+    output.writeBool(this.success);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -210,13 +523,189 @@ UserServiceThriftClient.prototype.recv_createUser = function(input,mtype,rseqid)
   result[Symbol.for("read")](input);
   input.readMessageEnd();
 
-  if (null !== result.e) {
-    return callback(result.e);
-  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
   return callback('createUser failed: unknown result');
+};
+
+UserServiceThriftClient.prototype.getUserById = function(id, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getUserById(id);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getUserById(id);
+  }
+};
+
+UserServiceThriftClient.prototype.send_getUserById = function(id) {
+  var output = new this.pClass(this.output);
+  var params = {
+    id: id
+  };
+  var args = new UserServiceThrift_getUserById_args(params);
+  try {
+    output.writeMessageBegin('getUserById', Thrift.MessageType.CALL, this.seqid());
+    args[Symbol.for("write")](output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+UserServiceThriftClient.prototype.recv_getUserById = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x[Symbol.for("read")](input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new UserServiceThrift_getUserById_result();
+  result[Symbol.for("read")](input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getUserById failed: unknown result');
+};
+
+UserServiceThriftClient.prototype.updateUser = function(id, name, email, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateUser(id, name, email);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateUser(id, name, email);
+  }
+};
+
+UserServiceThriftClient.prototype.send_updateUser = function(id, name, email) {
+  var output = new this.pClass(this.output);
+  var params = {
+    id: id,
+    name: name,
+    email: email
+  };
+  var args = new UserServiceThrift_updateUser_args(params);
+  try {
+    output.writeMessageBegin('updateUser', Thrift.MessageType.CALL, this.seqid());
+    args[Symbol.for("write")](output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+UserServiceThriftClient.prototype.recv_updateUser = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x[Symbol.for("read")](input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new UserServiceThrift_updateUser_result();
+  result[Symbol.for("read")](input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateUser failed: unknown result');
+};
+
+UserServiceThriftClient.prototype.deleteUser = function(id, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deleteUser(id);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deleteUser(id);
+  }
+};
+
+UserServiceThriftClient.prototype.send_deleteUser = function(id) {
+  var output = new this.pClass(this.output);
+  var params = {
+    id: id
+  };
+  var args = new UserServiceThrift_deleteUser_args(params);
+  try {
+    output.writeMessageBegin('deleteUser', Thrift.MessageType.CALL, this.seqid());
+    args[Symbol.for("write")](output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+UserServiceThriftClient.prototype.recv_deleteUser = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x[Symbol.for("read")](input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new UserServiceThrift_deleteUser_result();
+  result[Symbol.for("read")](input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deleteUser failed: unknown result');
 };
 exports.Client = UserServiceThriftClient;
 var UserServiceThriftProcessor = function(handler) {
@@ -252,13 +741,8 @@ UserServiceThriftProcessor.prototype.process_createUser = function(seqid, input,
       output.flush();
     }).catch(function (err) {
       var result;
-      if (err instanceof ttypes.UserExistsException) {
-        result = new UserServiceThrift_createUser_result(err);
-        output.writeMessageBegin("createUser", Thrift.MessageType.REPLY, seqid);
-      } else {
-        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("createUser", Thrift.MessageType.EXCEPTION, seqid);
-      }
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("createUser", Thrift.MessageType.EXCEPTION, seqid);
       result[Symbol.for("write")](output);
       output.writeMessageEnd();
       output.flush();
@@ -266,12 +750,125 @@ UserServiceThriftProcessor.prototype.process_createUser = function(seqid, input,
   } else {
     this._handler.createUser(args.name, args.email, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.UserExistsException) {
+      if ((err === null || typeof err === 'undefined')) {
         result_obj = new UserServiceThrift_createUser_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("createUser", Thrift.MessageType.REPLY, seqid);
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("createUser", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+UserServiceThriftProcessor.prototype.process_getUserById = function(seqid, input, output) {
+  var args = new UserServiceThrift_getUserById_args();
+  args[Symbol.for("read")](input);
+  input.readMessageEnd();
+  if (this._handler.getUserById.length === 1) {
+    Q.fcall(this._handler.getUserById.bind(this._handler),
+      args.id
+    ).then(function(result) {
+      var result_obj = new UserServiceThrift_getUserById_result({success: result});
+      output.writeMessageBegin("getUserById", Thrift.MessageType.REPLY, seqid);
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("getUserById", Thrift.MessageType.EXCEPTION, seqid);
+      result[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.getUserById(args.id, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new UserServiceThrift_getUserById_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("getUserById", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("getUserById", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+UserServiceThriftProcessor.prototype.process_updateUser = function(seqid, input, output) {
+  var args = new UserServiceThrift_updateUser_args();
+  args[Symbol.for("read")](input);
+  input.readMessageEnd();
+  if (this._handler.updateUser.length === 3) {
+    Q.fcall(this._handler.updateUser.bind(this._handler),
+      args.id,
+      args.name,
+      args.email
+    ).then(function(result) {
+      var result_obj = new UserServiceThrift_updateUser_result({success: result});
+      output.writeMessageBegin("updateUser", Thrift.MessageType.REPLY, seqid);
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("updateUser", Thrift.MessageType.EXCEPTION, seqid);
+      result[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.updateUser(args.id, args.name, args.email, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new UserServiceThrift_updateUser_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("updateUser", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("updateUser", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+UserServiceThriftProcessor.prototype.process_deleteUser = function(seqid, input, output) {
+  var args = new UserServiceThrift_deleteUser_args();
+  args[Symbol.for("read")](input);
+  input.readMessageEnd();
+  if (this._handler.deleteUser.length === 1) {
+    Q.fcall(this._handler.deleteUser.bind(this._handler),
+      args.id
+    ).then(function(result) {
+      var result_obj = new UserServiceThrift_deleteUser_result({success: result});
+      output.writeMessageBegin("deleteUser", Thrift.MessageType.REPLY, seqid);
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("deleteUser", Thrift.MessageType.EXCEPTION, seqid);
+      result[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.deleteUser(args.id, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new UserServiceThrift_deleteUser_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("deleteUser", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("deleteUser", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj[Symbol.for("write")](output);
       output.writeMessageEnd();

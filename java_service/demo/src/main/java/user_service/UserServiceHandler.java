@@ -14,45 +14,97 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
         this.emf = Persistence.createEntityManagerFactory("my-persistence-unit");
     }
 
+    // Helper convert Entity -> Thrift
+    private user_service.User convertToThrift(User user) {
+        user_service.User thriftUser = new user_service.User();
+        thriftUser.setId(user.getId().intValue()); // JPA id thường là Long
+        thriftUser.setName(user.getName());
+        thriftUser.setEmail(user.getEmail());
+        return thriftUser;
+    }
+
     @Override
     public user_service.User createUser(String name, String email) {
-
         EntityManager em = emf.createEntityManager();
-        user_service.User result = new user_service.User();
-
+        user_service.User result;
         try {
             em.getTransaction().begin();
 
             try {
-                // 🔎 Kiểm tra email đã tồn tại chưa
+                // 🔎 Check email tồn tại chưa
                 User existing = em.createQuery(
-                                "SELECT u FROM User u WHERE u.email = :email", User.class)
+                        "SELECT u FROM User u WHERE u.email = :email", User.class)
                         .setParameter("email", email)
                         .getSingleResult();
 
-                // Nếu tồn tại thì rollback và trả về user cũ
+                // Rollback nếu tồn tại
                 em.getTransaction().rollback();
-
-                result.setId(existing.getId());
-                result.setName(existing.getName());
-                result.setEmail(existing.getEmail());
+                result = convertToThrift(existing);
 
             } catch (NoResultException e) {
-                // ✅ Chưa có thì tạo mới
+                // ✅ Nếu chưa có -> thêm mới
                 User user = new User(name, email);
                 em.persist(user);
                 em.getTransaction().commit();
-
-                // 🔄 Convert từ entity.User -> thrift.User
-                result.setId(user.getId());
-                result.setName(user.getName());
-                result.setEmail(user.getEmail());
+                result = convertToThrift(user);
             }
 
         } finally {
             em.close();
         }
-
         return result;
+    }
+
+    @Override
+    public user_service.User getUserById(int id) {
+        EntityManager em = emf.createEntityManager();
+        user_service.User result = null;
+        try {
+            User user = em.find(User.class, (long) id);
+            if (user != null) {
+                result = convertToThrift(user);
+            }
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    @Override
+    public user_service.User updateUser(int id, String name, String email) {
+        EntityManager em = emf.createEntityManager();
+        user_service.User result = null;
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, (long) id);
+            if (user != null) {
+                user.setName(name);
+                user.setEmail(email);
+                em.merge(user);
+                result = convertToThrift(user);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        EntityManager em = emf.createEntityManager();
+        boolean deleted = false;
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, (long) id);
+            if (user != null) {
+                em.remove(user);
+                deleted = true;
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return deleted;
     }
 }

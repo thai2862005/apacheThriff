@@ -21,4 +21,34 @@ const getUsersPage = async (req, res) => {
   }
 };
 
-export { getUsersPage, createUser };
+  const getUserById = async (req, res) => {
+    const userId = req.params.id;
+    try{
+      const user = await client.getUserById(parseInt(userId));
+      res.render("userDetail", { user });
+    }catch(err){
+      res.render("error", { message: err.message });
+    }
+  }
+
+  const deleteUser = async (req, res) => {
+    const userId = req.params.id;
+    try{
+      const user = await client.deleteUser(parseInt(userId));
+      res.redirect("/users");
+    }catch(err){
+      res.render("error", { message: err.message });
+    }
+  }
+
+  const updateUser = async (req, res) => {
+    const userId = req.params.id;
+    const { name, email } = req.body;
+    try{
+      const user = await client.updateUser(parseInt(userId), name, email);
+      res.redirect("/users");
+    }catch(err){
+      res.render("error", { message: err.message });
+    }
+  }
+export { getUsersPage, createUser, getUserById, deleteUser, updateUser };
