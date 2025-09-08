@@ -1,5 +1,6 @@
 import client from "../Sever/thriffClient";
-const getUsersPage = async (req, res) => {
+import { Request, Response } from "express";
+const getUsersPage = async (req: Request, res: Response) => {
   try {
     // Tạm demo tạo user luôn, sau này có thể đổi thành listUsers()
     const user = await client.createUser("Alice", "alice@example.com");
@@ -11,7 +12,7 @@ const getUsersPage = async (req, res) => {
   }
 };
 
- const createUser = async (req, res) => {
+const createUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
   try {
     const user = await client.createUser(name, email);
@@ -21,33 +22,33 @@ const getUsersPage = async (req, res) => {
   }
 };
 
-  const getUserById = async (req, res) => {
+  const getUserById = async (req: Request, res: Response) => {
     const userId = req.params.id;
-    try{
+    try {
       const user = await client.getUserById(parseInt(userId));
       res.render("userDetail", { user });
-    }catch(err){
+    } catch (err) {
       res.render("error", { message: err.message });
     }
   }
 
-  const deleteUser = async (req, res) => {
+  const deleteUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
-    try{
+    try {
       const user = await client.deleteUser(parseInt(userId));
       res.redirect("/users");
-    }catch(err){
+    } catch (err) {
       res.render("error", { message: err.message });
     }
   }
 
-  const updateUser = async (req, res) => {
+  const updateUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
     const { name, email } = req.body;
-    try{
+    try {
       const user = await client.updateUser(parseInt(userId), name, email);
       res.redirect("/users");
-    }catch(err){
+    } catch (err) {
       res.render("error", { message: err.message });
     }
   }
