@@ -5,7 +5,7 @@ const getUsersPage = async (req: Request, res: Response) => {
     // Tạm demo tạo user luôn, sau này có thể đổi thành listUsers()
     const user = await client.createUser("Alice", "alice@example.com");
 
-    res.render("users", { user });
+    res.render("home", { user });
   } catch (err) {
     console.error("Error:", err);
     res.render("error", { message: err.message });
