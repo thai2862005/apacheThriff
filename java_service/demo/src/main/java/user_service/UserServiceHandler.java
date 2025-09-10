@@ -1,5 +1,10 @@
 package user_service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.thrift.TException;
+
 import entity.User; // JPA entity
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -43,7 +48,7 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
 
             } catch (NoResultException e) {
                 // ✅ Nếu chưa có -> thêm mới
-                User user = new User(name, email);
+                User user = new User(name, email, phone, address);
                 em.persist(user);
                 em.getTransaction().commit();
                 result = convertToThrift(user);
@@ -107,4 +112,50 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
         }
         return deleted;
     }
+    
+    @Override
+public List<user_service.User> getAllUsers() throws TException {
+    EntityManager em = emf.createEntityManager();
+    List<user_service.User> result = new ArrayList<>();
+
+    try {
+        List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+
+        for (User u : users) {
+            user_service.User thriftUser = new user_service.User();
+            thriftUser.setId(u.getId().intValue()); // ép Long → int
+            thriftUser.setName(u.getName());
+            thriftUser.setEmail(u.getEmail());
+            result.add(thriftUser);
+        }
+    } finally {
+        em.close();
+    }
+
+    return result;
+}
+    public List<user_service.User> getUsersPaged(int page, int pageSize) throws TException {
+        EntityManager em = emf.createEntityManager();
+        List<user_service.User> result = new ArrayList<>();
+
+        try {
+            List<User> users = em.createQuery("SELECT u FROM User u", User.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+
+            for (User u : users) {
+                user_service.User thriftUser = new user_service.User();
+                thriftUser.setId(u.getId().intValue()); // ép Long → int
+                thriftUser.setName(u.getName());
+                thriftUser.setEmail(u.getEmail());
+                result.add(thriftUser);
+            }
+        } finally {
+            em.close();
+        }
+
+        return result;
+    }
+    
 }

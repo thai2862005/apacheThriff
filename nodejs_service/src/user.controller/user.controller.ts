@@ -51,4 +51,25 @@ const createUser = async (req: Request, res: Response) => {
       res.render("error", { message: err.message });
     }
   }
-export { getUsersPage, createUser, getUserById, deleteUser, updateUser };
+  const getALLUsers = async (req: Request, res: Response) => {
+    try {
+      const users = await client.getAllUsers();
+      res.render("users", { users });
+    } catch (err) {
+      res.render("error", { message: err.message });
+    }
+  }
+
+  const UserPagedPanigation = async (req: Request, res: Response) => {
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    try {
+      const users = await client.getUsersPaged(page, pageSize);
+      res.render("users", { users });
+    }
+    catch (err) {
+      res.render("error", { message: err.message });
+    }
+  }
+
+export { getUsersPage, createUser, getUserById, deleteUser, updateUser, getALLUsers, UserPagedPanigation };

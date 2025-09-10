@@ -523,6 +523,226 @@ UserServiceThrift_deleteUser_result.prototype[Symbol.for("write")] = function(ou
   return;
 };
 
+var UserServiceThrift_getAllUsers_args = function(args) {
+};
+UserServiceThrift_getAllUsers_args.prototype = {};
+UserServiceThrift_getAllUsers_args.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getAllUsers_args.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getAllUsers_args');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_getAllUsers_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = Thrift.copyList(args.success, [ttypes.User]);
+    }
+  }
+};
+UserServiceThrift_getAllUsers_result.prototype = {};
+UserServiceThrift_getAllUsers_result.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.LIST) {
+        this.success = [];
+        var _rtmp31 = input.readListBegin();
+        var _size0 = _rtmp31.size || 0;
+        for (var _i2 = 0; _i2 < _size0; ++_i2) {
+          var elem3 = null;
+          elem3 = new ttypes.User();
+          elem3[Symbol.for("read")](input);
+          this.success.push(elem3);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getAllUsers_result.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getAllUsers_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.LIST, 0);
+    output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
+    for (var iter4 in this.success) {
+      if (this.success.hasOwnProperty(iter4)) {
+        iter4 = this.success[iter4];
+        iter4[Symbol.for("write")](output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_getUsersPaged_args = function(args) {
+  this.page = null;
+  this.pageSize = null;
+  if (args) {
+    if (args.page !== undefined && args.page !== null) {
+      this.page = args.page;
+    }
+    if (args.pageSize !== undefined && args.pageSize !== null) {
+      this.pageSize = args.pageSize;
+    }
+  }
+};
+UserServiceThrift_getUsersPaged_args.prototype = {};
+UserServiceThrift_getUsersPaged_args.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.page = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.pageSize = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getUsersPaged_args.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getUsersPaged_args');
+  if (this.page !== null && this.page !== undefined) {
+    output.writeFieldBegin('page', Thrift.Type.I32, 1);
+    output.writeI32(this.page);
+    output.writeFieldEnd();
+  }
+  if (this.pageSize !== null && this.pageSize !== undefined) {
+    output.writeFieldBegin('pageSize', Thrift.Type.I32, 2);
+    output.writeI32(this.pageSize);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var UserServiceThrift_getUsersPaged_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = Thrift.copyList(args.success, [ttypes.User]);
+    }
+  }
+};
+UserServiceThrift_getUsersPaged_result.prototype = {};
+UserServiceThrift_getUsersPaged_result.prototype[Symbol.for("read")] = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.LIST) {
+        this.success = [];
+        var _rtmp36 = input.readListBegin();
+        var _size5 = _rtmp36.size || 0;
+        for (var _i7 = 0; _i7 < _size5; ++_i7) {
+          var elem8 = null;
+          elem8 = new ttypes.User();
+          elem8[Symbol.for("read")](input);
+          this.success.push(elem8);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserServiceThrift_getUsersPaged_result.prototype[Symbol.for("write")] = function(output) {
+  output.writeStructBegin('UserServiceThrift_getUsersPaged_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.LIST, 0);
+    output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
+    for (var iter9 in this.success) {
+      if (this.success.hasOwnProperty(iter9)) {
+        iter9 = this.success[iter9];
+        iter9[Symbol.for("write")](output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var UserServiceThriftClient = function(output, pClass) {
   this.output = output;
   this.pClass = pClass;
@@ -775,6 +995,122 @@ UserServiceThriftClient.prototype.recv_deleteUser = function(input,mtype,rseqid)
   }
   return callback('deleteUser failed: unknown result');
 };
+
+UserServiceThriftClient.prototype.getAllUsers = function(callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getAllUsers();
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getAllUsers();
+  }
+};
+
+UserServiceThriftClient.prototype.send_getAllUsers = function() {
+  var output = new this.pClass(this.output);
+  var args = new UserServiceThrift_getAllUsers_args();
+  try {
+    output.writeMessageBegin('getAllUsers', Thrift.MessageType.CALL, this.seqid());
+    args[Symbol.for("write")](output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+UserServiceThriftClient.prototype.recv_getAllUsers = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x[Symbol.for("read")](input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new UserServiceThrift_getAllUsers_result();
+  result[Symbol.for("read")](input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getAllUsers failed: unknown result');
+};
+
+UserServiceThriftClient.prototype.getUsersPaged = function(page, pageSize, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getUsersPaged(page, pageSize);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getUsersPaged(page, pageSize);
+  }
+};
+
+UserServiceThriftClient.prototype.send_getUsersPaged = function(page, pageSize) {
+  var output = new this.pClass(this.output);
+  var params = {
+    page: page,
+    pageSize: pageSize
+  };
+  var args = new UserServiceThrift_getUsersPaged_args(params);
+  try {
+    output.writeMessageBegin('getUsersPaged', Thrift.MessageType.CALL, this.seqid());
+    args[Symbol.for("write")](output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+UserServiceThriftClient.prototype.recv_getUsersPaged = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x[Symbol.for("read")](input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new UserServiceThrift_getUsersPaged_result();
+  result[Symbol.for("read")](input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getUsersPaged failed: unknown result');
+};
 exports.Client = UserServiceThriftClient;
 var UserServiceThriftProcessor = function(handler) {
   this._handler = handler;
@@ -941,6 +1277,80 @@ UserServiceThriftProcessor.prototype.process_deleteUser = function(seqid, input,
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("deleteUser", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+UserServiceThriftProcessor.prototype.process_getAllUsers = function(seqid, input, output) {
+  var args = new UserServiceThrift_getAllUsers_args();
+  args[Symbol.for("read")](input);
+  input.readMessageEnd();
+  if (this._handler.getAllUsers.length === 0) {
+    Q.fcall(this._handler.getAllUsers.bind(this._handler)
+    ).then(function(result) {
+      var result_obj = new UserServiceThrift_getAllUsers_result({success: result});
+      output.writeMessageBegin("getAllUsers", Thrift.MessageType.REPLY, seqid);
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("getAllUsers", Thrift.MessageType.EXCEPTION, seqid);
+      result[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.getAllUsers(function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new UserServiceThrift_getAllUsers_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("getAllUsers", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("getAllUsers", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+UserServiceThriftProcessor.prototype.process_getUsersPaged = function(seqid, input, output) {
+  var args = new UserServiceThrift_getUsersPaged_args();
+  args[Symbol.for("read")](input);
+  input.readMessageEnd();
+  if (this._handler.getUsersPaged.length === 2) {
+    Q.fcall(this._handler.getUsersPaged.bind(this._handler),
+      args.page,
+      args.pageSize
+    ).then(function(result) {
+      var result_obj = new UserServiceThrift_getUsersPaged_result({success: result});
+      output.writeMessageBegin("getUsersPaged", Thrift.MessageType.REPLY, seqid);
+      result_obj[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("getUsersPaged", Thrift.MessageType.EXCEPTION, seqid);
+      result[Symbol.for("write")](output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.getUsersPaged(args.page, args.pageSize, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new UserServiceThrift_getUsersPaged_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("getUsersPaged", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("getUsersPaged", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj[Symbol.for("write")](output);
       output.writeMessageEnd();
