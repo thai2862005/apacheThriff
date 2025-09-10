@@ -24,7 +24,7 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
     }
 
     @Override
-    public user_service.User createUser(String name, String email) {
+    public user_service.User createUser(String name, String email, String phone, String address) {
         EntityManager em = emf.createEntityManager();
         user_service.User result;
         try {
@@ -71,7 +71,7 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
     }
 
     @Override
-    public user_service.User updateUser(int id, String name, String email) {
+    public user_service.User updateUser(int id, String name, String email, String phone, String address) {
         EntityManager em = emf.createEntityManager();
         user_service.User result = null;
         try {

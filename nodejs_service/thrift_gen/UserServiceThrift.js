@@ -17,12 +17,20 @@ var ttypes = require('./user_service_types');
 var UserServiceThrift_createUser_args = function(args) {
   this.name = null;
   this.email = null;
+  this.phone = null;
+  this.address = null;
   if (args) {
     if (args.name !== undefined && args.name !== null) {
       this.name = args.name;
     }
     if (args.email !== undefined && args.email !== null) {
       this.email = args.email;
+    }
+    if (args.phone !== undefined && args.phone !== null) {
+      this.phone = args.phone;
+    }
+    if (args.address !== undefined && args.address !== null) {
+      this.address = args.address;
     }
   }
 };
@@ -51,6 +59,20 @@ UserServiceThrift_createUser_args.prototype[Symbol.for("read")] = function(input
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.phone = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.address = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -70,6 +92,16 @@ UserServiceThrift_createUser_args.prototype[Symbol.for("write")] = function(outp
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 2);
     output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  if (this.phone !== null && this.phone !== undefined) {
+    output.writeFieldBegin('phone', Thrift.Type.STRING, 3);
+    output.writeString(this.phone);
+    output.writeFieldEnd();
+  }
+  if (this.address !== null && this.address !== undefined) {
+    output.writeFieldBegin('address', Thrift.Type.STRING, 4);
+    output.writeString(this.address);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -233,6 +265,8 @@ var UserServiceThrift_updateUser_args = function(args) {
   this.id = null;
   this.name = null;
   this.email = null;
+  this.phone = null;
+  this.address = null;
   if (args) {
     if (args.id !== undefined && args.id !== null) {
       this.id = args.id;
@@ -242,6 +276,12 @@ var UserServiceThrift_updateUser_args = function(args) {
     }
     if (args.email !== undefined && args.email !== null) {
       this.email = args.email;
+    }
+    if (args.phone !== undefined && args.phone !== null) {
+      this.phone = args.phone;
+    }
+    if (args.address !== undefined && args.address !== null) {
+      this.address = args.address;
     }
   }
 };
@@ -277,6 +317,20 @@ UserServiceThrift_updateUser_args.prototype[Symbol.for("read")] = function(input
         input.skip(ftype);
       }
       break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.phone = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.address = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -301,6 +355,16 @@ UserServiceThrift_updateUser_args.prototype[Symbol.for("write")] = function(outp
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 3);
     output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  if (this.phone !== null && this.phone !== undefined) {
+    output.writeFieldBegin('phone', Thrift.Type.STRING, 4);
+    output.writeString(this.phone);
+    output.writeFieldEnd();
+  }
+  if (this.address !== null && this.address !== undefined) {
+    output.writeFieldBegin('address', Thrift.Type.STRING, 5);
+    output.writeString(this.address);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -469,7 +533,7 @@ UserServiceThriftClient.prototype = {};
 UserServiceThriftClient.prototype.seqid = function() { return this._seqid; };
 UserServiceThriftClient.prototype.new_seqid = function() { return this._seqid += 1; };
 
-UserServiceThriftClient.prototype.createUser = function(name, email, callback) {
+UserServiceThriftClient.prototype.createUser = function(name, email, phone, address, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -480,19 +544,21 @@ UserServiceThriftClient.prototype.createUser = function(name, email, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_createUser(name, email);
+    this.send_createUser(name, email, phone, address);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_createUser(name, email);
+    this.send_createUser(name, email, phone, address);
   }
 };
 
-UserServiceThriftClient.prototype.send_createUser = function(name, email) {
+UserServiceThriftClient.prototype.send_createUser = function(name, email, phone, address) {
   var output = new this.pClass(this.output);
   var params = {
     name: name,
-    email: email
+    email: email,
+    phone: phone,
+    address: address
   };
   var args = new UserServiceThrift_createUser_args(params);
   try {
@@ -588,7 +654,7 @@ UserServiceThriftClient.prototype.recv_getUserById = function(input,mtype,rseqid
   return callback('getUserById failed: unknown result');
 };
 
-UserServiceThriftClient.prototype.updateUser = function(id, name, email, callback) {
+UserServiceThriftClient.prototype.updateUser = function(id, name, email, phone, address, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -599,20 +665,22 @@ UserServiceThriftClient.prototype.updateUser = function(id, name, email, callbac
         _defer.resolve(result);
       }
     };
-    this.send_updateUser(id, name, email);
+    this.send_updateUser(id, name, email, phone, address);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_updateUser(id, name, email);
+    this.send_updateUser(id, name, email, phone, address);
   }
 };
 
-UserServiceThriftClient.prototype.send_updateUser = function(id, name, email) {
+UserServiceThriftClient.prototype.send_updateUser = function(id, name, email, phone, address) {
   var output = new this.pClass(this.output);
   var params = {
     id: id,
     name: name,
-    email: email
+    email: email,
+    phone: phone,
+    address: address
   };
   var args = new UserServiceThrift_updateUser_args(params);
   try {
@@ -729,10 +797,12 @@ UserServiceThriftProcessor.prototype.process_createUser = function(seqid, input,
   var args = new UserServiceThrift_createUser_args();
   args[Symbol.for("read")](input);
   input.readMessageEnd();
-  if (this._handler.createUser.length === 2) {
+  if (this._handler.createUser.length === 4) {
     Q.fcall(this._handler.createUser.bind(this._handler),
       args.name,
-      args.email
+      args.email,
+      args.phone,
+      args.address
     ).then(function(result) {
       var result_obj = new UserServiceThrift_createUser_result({success: result});
       output.writeMessageBegin("createUser", Thrift.MessageType.REPLY, seqid);
@@ -748,7 +818,7 @@ UserServiceThriftProcessor.prototype.process_createUser = function(seqid, input,
       output.flush();
     });
   } else {
-    this._handler.createUser(args.name, args.email, function (err, result) {
+    this._handler.createUser(args.name, args.email, args.phone, args.address, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined')) {
         result_obj = new UserServiceThrift_createUser_result((err !== null || typeof err === 'undefined') ? err : {success: result});
@@ -804,11 +874,13 @@ UserServiceThriftProcessor.prototype.process_updateUser = function(seqid, input,
   var args = new UserServiceThrift_updateUser_args();
   args[Symbol.for("read")](input);
   input.readMessageEnd();
-  if (this._handler.updateUser.length === 3) {
+  if (this._handler.updateUser.length === 5) {
     Q.fcall(this._handler.updateUser.bind(this._handler),
       args.id,
       args.name,
-      args.email
+      args.email,
+      args.phone,
+      args.address
     ).then(function(result) {
       var result_obj = new UserServiceThrift_updateUser_result({success: result});
       output.writeMessageBegin("updateUser", Thrift.MessageType.REPLY, seqid);
@@ -824,7 +896,7 @@ UserServiceThriftProcessor.prototype.process_updateUser = function(seqid, input,
       output.flush();
     });
   } else {
-    this._handler.updateUser(args.id, args.name, args.email, function (err, result) {
+    this._handler.updateUser(args.id, args.name, args.email, args.phone, args.address, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined')) {
         result_obj = new UserServiceThrift_updateUser_result((err !== null || typeof err === 'undefined') ? err : {success: result});

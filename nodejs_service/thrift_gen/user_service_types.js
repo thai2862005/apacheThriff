@@ -16,6 +16,8 @@ var User = module.exports.User = function(args) {
   this.id = null;
   this.name = null;
   this.email = null;
+  this.phone = null;
+  this.address = null;
   if (args) {
     if (args.id !== undefined && args.id !== null) {
       this.id = args.id;
@@ -25,6 +27,12 @@ var User = module.exports.User = function(args) {
     }
     if (args.email !== undefined && args.email !== null) {
       this.email = args.email;
+    }
+    if (args.phone !== undefined && args.phone !== null) {
+      this.phone = args.phone;
+    }
+    if (args.address !== undefined && args.address !== null) {
+      this.address = args.address;
     }
   }
 };
@@ -60,6 +68,20 @@ User.prototype[Symbol.for("read")] = function(input) {
         input.skip(ftype);
       }
       break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.phone = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.address = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -84,6 +106,16 @@ User.prototype[Symbol.for("write")] = function(output) {
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 3);
     output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  if (this.phone !== null && this.phone !== undefined) {
+    output.writeFieldBegin('phone', Thrift.Type.STRING, 4);
+    output.writeString(this.phone);
+    output.writeFieldEnd();
+  }
+  if (this.address !== null && this.address !== undefined) {
+    output.writeFieldBegin('address', Thrift.Type.STRING, 5);
+    output.writeString(this.address);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

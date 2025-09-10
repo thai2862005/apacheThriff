@@ -2,10 +2,9 @@ import client from "../Sever/thriffClient";
 import { Request, Response } from "express";
 const getUsersPage = async (req: Request, res: Response) => {
   try {
-    // Tạm demo tạo user luôn, sau này có thể đổi thành listUsers()
-    const user = await client.createUser("Alice", "alice@example.com");
+    const user = await client.createUser("Alice", "alice@example.com","1234567890","123 Main St");
 
-    res.render("home", { user });
+    res.render("users", { user });
   } catch (err) {
     console.error("Error:", err);
     res.render("error", { message: err.message });
@@ -13,9 +12,9 @@ const getUsersPage = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
-  const { name, email } = req.body;
+  const { name, email, phone, address } = req.body;
   try {
-    const user = await client.createUser(name, email);
+    const user = await client.createUser(name, email, phone, address);
     res.redirect("/users"); // sau khi tạo xong quay lại trang danh sách
   } catch (err) {
     res.render("error", { message: err.message });

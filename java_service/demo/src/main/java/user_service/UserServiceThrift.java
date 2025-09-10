@@ -11,11 +11,11 @@ public class UserServiceThrift {
 
   public interface Iface {
 
-    public User createUser(java.lang.String name, java.lang.String email) throws org.apache.thrift.TException;
+    public User createUser(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException;
 
     public User getUserById(int id) throws org.apache.thrift.TException;
 
-    public User updateUser(int id, java.lang.String name, java.lang.String email) throws org.apache.thrift.TException;
+    public User updateUser(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException;
 
     public boolean deleteUser(int id) throws org.apache.thrift.TException;
 
@@ -23,11 +23,11 @@ public class UserServiceThrift {
 
   public interface AsyncIface {
 
-    public void createUser(java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException;
+    public void createUser(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException;
 
     public void getUserById(int id, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException;
 
-    public void updateUser(int id, java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException;
+    public void updateUser(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException;
 
     public void deleteUser(int id, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
 
@@ -56,17 +56,19 @@ public class UserServiceThrift {
     }
 
     @Override
-    public User createUser(java.lang.String name, java.lang.String email) throws org.apache.thrift.TException
+    public User createUser(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException
     {
-      send_createUser(name, email);
+      send_createUser(name, email, phone, address);
       return recv_createUser();
     }
 
-    public void send_createUser(java.lang.String name, java.lang.String email) throws org.apache.thrift.TException
+    public void send_createUser(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException
     {
       createUser_args args = new createUser_args();
       args.setName(name);
       args.setEmail(email);
+      args.setPhone(phone);
+      args.setAddress(address);
       sendBase("createUser", args);
     }
 
@@ -105,18 +107,20 @@ public class UserServiceThrift {
     }
 
     @Override
-    public User updateUser(int id, java.lang.String name, java.lang.String email) throws org.apache.thrift.TException
+    public User updateUser(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException
     {
-      send_updateUser(id, name, email);
+      send_updateUser(id, name, email, phone, address);
       return recv_updateUser();
     }
 
-    public void send_updateUser(int id, java.lang.String name, java.lang.String email) throws org.apache.thrift.TException
+    public void send_updateUser(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address) throws org.apache.thrift.TException
     {
       updateUser_args args = new updateUser_args();
       args.setId(id);
       args.setName(name);
       args.setEmail(email);
+      args.setPhone(phone);
+      args.setAddress(address);
       sendBase("updateUser", args);
     }
 
@@ -174,9 +178,9 @@ public class UserServiceThrift {
     }
 
     @Override
-    public void createUser(java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
+    public void createUser(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createUser_call method_call = new createUser_call(name, email, resultHandler, this, ___protocolFactory, ___transport);
+      createUser_call method_call = new createUser_call(name, email, phone, address, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -184,10 +188,14 @@ public class UserServiceThrift {
     public static class createUser_call extends org.apache.thrift.async.TAsyncMethodCall<User> {
       private java.lang.String name;
       private java.lang.String email;
-      public createUser_call(java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.lang.String phone;
+      private java.lang.String address;
+      public createUser_call(java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
       }
 
       @Override
@@ -196,6 +204,8 @@ public class UserServiceThrift {
         createUser_args args = new createUser_args();
         args.setName(name);
         args.setEmail(email);
+        args.setPhone(phone);
+        args.setAddress(address);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -247,9 +257,9 @@ public class UserServiceThrift {
     }
 
     @Override
-    public void updateUser(int id, java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
+    public void updateUser(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      updateUser_call method_call = new updateUser_call(id, name, email, resultHandler, this, ___protocolFactory, ___transport);
+      updateUser_call method_call = new updateUser_call(id, name, email, phone, address, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -258,11 +268,15 @@ public class UserServiceThrift {
       private int id;
       private java.lang.String name;
       private java.lang.String email;
-      public updateUser_call(int id, java.lang.String name, java.lang.String email, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.lang.String phone;
+      private java.lang.String address;
+      public updateUser_call(int id, java.lang.String name, java.lang.String email, java.lang.String phone, java.lang.String address, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
       }
 
       @Override
@@ -272,6 +286,8 @@ public class UserServiceThrift {
         args.setId(id);
         args.setName(name);
         args.setEmail(email);
+        args.setPhone(phone);
+        args.setAddress(address);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -370,7 +386,7 @@ public class UserServiceThrift {
       @Override
       public createUser_result getResult(I iface, createUser_args args) throws org.apache.thrift.TException {
         createUser_result result = getEmptyResultInstance();
-        result.success = iface.createUser(args.name, args.email);
+        result.success = iface.createUser(args.name, args.email, args.phone, args.address);
         return result;
       }
     }
@@ -436,7 +452,7 @@ public class UserServiceThrift {
       @Override
       public updateUser_result getResult(I iface, updateUser_args args) throws org.apache.thrift.TException {
         updateUser_result result = getEmptyResultInstance();
-        result.success = iface.updateUser(args.id, args.name, args.email);
+        result.success = iface.updateUser(args.id, args.name, args.email, args.phone, args.address);
         return result;
       }
     }
@@ -563,7 +579,7 @@ public class UserServiceThrift {
 
       @Override
       public void start(I iface, createUser_args args, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
-        iface.createUser(args.name, args.email,resultHandler);
+        iface.createUser(args.name, args.email, args.phone, args.address,resultHandler);
       }
     }
 
@@ -707,7 +723,7 @@ public class UserServiceThrift {
 
       @Override
       public void start(I iface, updateUser_args args, org.apache.thrift.async.AsyncMethodCallback<User> resultHandler) throws org.apache.thrift.TException {
-        iface.updateUser(args.id, args.name, args.email,resultHandler);
+        iface.updateUser(args.id, args.name, args.email, args.phone, args.address,resultHandler);
       }
     }
 
@@ -792,17 +808,23 @@ public class UserServiceThrift {
 
     private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("email", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField PHONE_FIELD_DESC = new org.apache.thrift.protocol.TField("phone", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField ADDRESS_FIELD_DESC = new org.apache.thrift.protocol.TField("address", org.apache.thrift.protocol.TType.STRING, (short)4);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new createUser_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new createUser_argsTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.lang.String name; // required
     public @org.apache.thrift.annotation.Nullable java.lang.String email; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String phone; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String address; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       NAME((short)1, "name"),
-      EMAIL((short)2, "email");
+      EMAIL((short)2, "email"),
+      PHONE((short)3, "phone"),
+      ADDRESS((short)4, "address");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -822,6 +844,10 @@ public class UserServiceThrift {
             return NAME;
           case 2: // EMAIL
             return EMAIL;
+          case 3: // PHONE
+            return PHONE;
+          case 4: // ADDRESS
+            return ADDRESS;
           default:
             return null;
         }
@@ -872,6 +898,10 @@ public class UserServiceThrift {
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.EMAIL, new org.apache.thrift.meta_data.FieldMetaData("email", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.PHONE, new org.apache.thrift.meta_data.FieldMetaData("phone", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ADDRESS, new org.apache.thrift.meta_data.FieldMetaData("address", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createUser_args.class, metaDataMap);
     }
@@ -881,11 +911,15 @@ public class UserServiceThrift {
 
     public createUser_args(
       java.lang.String name,
-      java.lang.String email)
+      java.lang.String email,
+      java.lang.String phone,
+      java.lang.String address)
     {
       this();
       this.name = name;
       this.email = email;
+      this.phone = phone;
+      this.address = address;
     }
 
     /**
@@ -898,6 +932,12 @@ public class UserServiceThrift {
       if (other.isSetEmail()) {
         this.email = other.email;
       }
+      if (other.isSetPhone()) {
+        this.phone = other.phone;
+      }
+      if (other.isSetAddress()) {
+        this.address = other.address;
+      }
     }
 
     @Override
@@ -909,6 +949,8 @@ public class UserServiceThrift {
     public void clear() {
       this.name = null;
       this.email = null;
+      this.phone = null;
+      this.address = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -961,6 +1003,56 @@ public class UserServiceThrift {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getPhone() {
+      return this.phone;
+    }
+
+    public createUser_args setPhone(@org.apache.thrift.annotation.Nullable java.lang.String phone) {
+      this.phone = phone;
+      return this;
+    }
+
+    public void unsetPhone() {
+      this.phone = null;
+    }
+
+    /** Returns true if field phone is set (has been assigned a value) and false otherwise */
+    public boolean isSetPhone() {
+      return this.phone != null;
+    }
+
+    public void setPhoneIsSet(boolean value) {
+      if (!value) {
+        this.phone = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getAddress() {
+      return this.address;
+    }
+
+    public createUser_args setAddress(@org.apache.thrift.annotation.Nullable java.lang.String address) {
+      this.address = address;
+      return this;
+    }
+
+    public void unsetAddress() {
+      this.address = null;
+    }
+
+    /** Returns true if field address is set (has been assigned a value) and false otherwise */
+    public boolean isSetAddress() {
+      return this.address != null;
+    }
+
+    public void setAddressIsSet(boolean value) {
+      if (!value) {
+        this.address = null;
+      }
+    }
+
     @Override
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
@@ -980,6 +1072,22 @@ public class UserServiceThrift {
         }
         break;
 
+      case PHONE:
+        if (value == null) {
+          unsetPhone();
+        } else {
+          setPhone((java.lang.String)value);
+        }
+        break;
+
+      case ADDRESS:
+        if (value == null) {
+          unsetAddress();
+        } else {
+          setAddress((java.lang.String)value);
+        }
+        break;
+
       }
     }
 
@@ -992,6 +1100,12 @@ public class UserServiceThrift {
 
       case EMAIL:
         return getEmail();
+
+      case PHONE:
+        return getPhone();
+
+      case ADDRESS:
+        return getAddress();
 
       }
       throw new java.lang.IllegalStateException();
@@ -1009,6 +1123,10 @@ public class UserServiceThrift {
         return isSetName();
       case EMAIL:
         return isSetEmail();
+      case PHONE:
+        return isSetPhone();
+      case ADDRESS:
+        return isSetAddress();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -1044,6 +1162,24 @@ public class UserServiceThrift {
           return false;
       }
 
+      boolean this_present_phone = true && this.isSetPhone();
+      boolean that_present_phone = true && that.isSetPhone();
+      if (this_present_phone || that_present_phone) {
+        if (!(this_present_phone && that_present_phone))
+          return false;
+        if (!this.phone.equals(that.phone))
+          return false;
+      }
+
+      boolean this_present_address = true && this.isSetAddress();
+      boolean that_present_address = true && that.isSetAddress();
+      if (this_present_address || that_present_address) {
+        if (!(this_present_address && that_present_address))
+          return false;
+        if (!this.address.equals(that.address))
+          return false;
+      }
+
       return true;
     }
 
@@ -1058,6 +1194,14 @@ public class UserServiceThrift {
       hashCode = hashCode * 8191 + ((isSetEmail()) ? 131071 : 524287);
       if (isSetEmail())
         hashCode = hashCode * 8191 + email.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetPhone()) ? 131071 : 524287);
+      if (isSetPhone())
+        hashCode = hashCode * 8191 + phone.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetAddress()) ? 131071 : 524287);
+      if (isSetAddress())
+        hashCode = hashCode * 8191 + address.hashCode();
 
       return hashCode;
     }
@@ -1086,6 +1230,26 @@ public class UserServiceThrift {
       }
       if (isSetEmail()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.email, other.email);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetPhone(), other.isSetPhone());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPhone()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.phone, other.phone);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetAddress(), other.isSetAddress());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAddress()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.address, other.address);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -1127,6 +1291,22 @@ public class UserServiceThrift {
         sb.append("null");
       } else {
         sb.append(this.email);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("phone:");
+      if (this.phone == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.phone);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("address:");
+      if (this.address == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.address);
       }
       first = false;
       sb.append(")");
@@ -1190,6 +1370,22 @@ public class UserServiceThrift {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 3: // PHONE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.phone = iprot.readString();
+                struct.setPhoneIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // ADDRESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.address = iprot.readString();
+                struct.setAddressIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -1214,6 +1410,16 @@ public class UserServiceThrift {
         if (struct.email != null) {
           oprot.writeFieldBegin(EMAIL_FIELD_DESC);
           oprot.writeString(struct.email);
+          oprot.writeFieldEnd();
+        }
+        if (struct.phone != null) {
+          oprot.writeFieldBegin(PHONE_FIELD_DESC);
+          oprot.writeString(struct.phone);
+          oprot.writeFieldEnd();
+        }
+        if (struct.address != null) {
+          oprot.writeFieldBegin(ADDRESS_FIELD_DESC);
+          oprot.writeString(struct.address);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -1241,19 +1447,31 @@ public class UserServiceThrift {
         if (struct.isSetEmail()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetPhone()) {
+          optionals.set(2);
+        }
+        if (struct.isSetAddress()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
         if (struct.isSetName()) {
           oprot.writeString(struct.name);
         }
         if (struct.isSetEmail()) {
           oprot.writeString(struct.email);
         }
+        if (struct.isSetPhone()) {
+          oprot.writeString(struct.phone);
+        }
+        if (struct.isSetAddress()) {
+          oprot.writeString(struct.address);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createUser_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           struct.name = iprot.readString();
           struct.setNameIsSet(true);
@@ -1261,6 +1479,14 @@ public class UserServiceThrift {
         if (incoming.get(1)) {
           struct.email = iprot.readString();
           struct.setEmailIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.phone = iprot.readString();
+          struct.setPhoneIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.address = iprot.readString();
+          struct.setAddressIsSet(true);
         }
       }
     }
@@ -2417,6 +2643,8 @@ public class UserServiceThrift {
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.I32, (short)1);
     private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
     private static final org.apache.thrift.protocol.TField EMAIL_FIELD_DESC = new org.apache.thrift.protocol.TField("email", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField PHONE_FIELD_DESC = new org.apache.thrift.protocol.TField("phone", org.apache.thrift.protocol.TType.STRING, (short)4);
+    private static final org.apache.thrift.protocol.TField ADDRESS_FIELD_DESC = new org.apache.thrift.protocol.TField("address", org.apache.thrift.protocol.TType.STRING, (short)5);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new updateUser_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new updateUser_argsTupleSchemeFactory();
@@ -2424,12 +2652,16 @@ public class UserServiceThrift {
     public int id; // required
     public @org.apache.thrift.annotation.Nullable java.lang.String name; // required
     public @org.apache.thrift.annotation.Nullable java.lang.String email; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String phone; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String address; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       ID((short)1, "id"),
       NAME((short)2, "name"),
-      EMAIL((short)3, "email");
+      EMAIL((short)3, "email"),
+      PHONE((short)4, "phone"),
+      ADDRESS((short)5, "address");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2451,6 +2683,10 @@ public class UserServiceThrift {
             return NAME;
           case 3: // EMAIL
             return EMAIL;
+          case 4: // PHONE
+            return PHONE;
+          case 5: // ADDRESS
+            return ADDRESS;
           default:
             return null;
         }
@@ -2505,6 +2741,10 @@ public class UserServiceThrift {
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.EMAIL, new org.apache.thrift.meta_data.FieldMetaData("email", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.PHONE, new org.apache.thrift.meta_data.FieldMetaData("phone", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ADDRESS, new org.apache.thrift.meta_data.FieldMetaData("address", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(updateUser_args.class, metaDataMap);
     }
@@ -2515,13 +2755,17 @@ public class UserServiceThrift {
     public updateUser_args(
       int id,
       java.lang.String name,
-      java.lang.String email)
+      java.lang.String email,
+      java.lang.String phone,
+      java.lang.String address)
     {
       this();
       this.id = id;
       setIdIsSet(true);
       this.name = name;
       this.email = email;
+      this.phone = phone;
+      this.address = address;
     }
 
     /**
@@ -2536,6 +2780,12 @@ public class UserServiceThrift {
       if (other.isSetEmail()) {
         this.email = other.email;
       }
+      if (other.isSetPhone()) {
+        this.phone = other.phone;
+      }
+      if (other.isSetAddress()) {
+        this.address = other.address;
+      }
     }
 
     @Override
@@ -2549,6 +2799,8 @@ public class UserServiceThrift {
       this.id = 0;
       this.name = null;
       this.email = null;
+      this.phone = null;
+      this.address = null;
     }
 
     public int getId() {
@@ -2624,6 +2876,56 @@ public class UserServiceThrift {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getPhone() {
+      return this.phone;
+    }
+
+    public updateUser_args setPhone(@org.apache.thrift.annotation.Nullable java.lang.String phone) {
+      this.phone = phone;
+      return this;
+    }
+
+    public void unsetPhone() {
+      this.phone = null;
+    }
+
+    /** Returns true if field phone is set (has been assigned a value) and false otherwise */
+    public boolean isSetPhone() {
+      return this.phone != null;
+    }
+
+    public void setPhoneIsSet(boolean value) {
+      if (!value) {
+        this.phone = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getAddress() {
+      return this.address;
+    }
+
+    public updateUser_args setAddress(@org.apache.thrift.annotation.Nullable java.lang.String address) {
+      this.address = address;
+      return this;
+    }
+
+    public void unsetAddress() {
+      this.address = null;
+    }
+
+    /** Returns true if field address is set (has been assigned a value) and false otherwise */
+    public boolean isSetAddress() {
+      return this.address != null;
+    }
+
+    public void setAddressIsSet(boolean value) {
+      if (!value) {
+        this.address = null;
+      }
+    }
+
     @Override
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
@@ -2651,6 +2953,22 @@ public class UserServiceThrift {
         }
         break;
 
+      case PHONE:
+        if (value == null) {
+          unsetPhone();
+        } else {
+          setPhone((java.lang.String)value);
+        }
+        break;
+
+      case ADDRESS:
+        if (value == null) {
+          unsetAddress();
+        } else {
+          setAddress((java.lang.String)value);
+        }
+        break;
+
       }
     }
 
@@ -2666,6 +2984,12 @@ public class UserServiceThrift {
 
       case EMAIL:
         return getEmail();
+
+      case PHONE:
+        return getPhone();
+
+      case ADDRESS:
+        return getAddress();
 
       }
       throw new java.lang.IllegalStateException();
@@ -2685,6 +3009,10 @@ public class UserServiceThrift {
         return isSetName();
       case EMAIL:
         return isSetEmail();
+      case PHONE:
+        return isSetPhone();
+      case ADDRESS:
+        return isSetAddress();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -2729,6 +3057,24 @@ public class UserServiceThrift {
           return false;
       }
 
+      boolean this_present_phone = true && this.isSetPhone();
+      boolean that_present_phone = true && that.isSetPhone();
+      if (this_present_phone || that_present_phone) {
+        if (!(this_present_phone && that_present_phone))
+          return false;
+        if (!this.phone.equals(that.phone))
+          return false;
+      }
+
+      boolean this_present_address = true && this.isSetAddress();
+      boolean that_present_address = true && that.isSetAddress();
+      if (this_present_address || that_present_address) {
+        if (!(this_present_address && that_present_address))
+          return false;
+        if (!this.address.equals(that.address))
+          return false;
+      }
+
       return true;
     }
 
@@ -2745,6 +3091,14 @@ public class UserServiceThrift {
       hashCode = hashCode * 8191 + ((isSetEmail()) ? 131071 : 524287);
       if (isSetEmail())
         hashCode = hashCode * 8191 + email.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetPhone()) ? 131071 : 524287);
+      if (isSetPhone())
+        hashCode = hashCode * 8191 + phone.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetAddress()) ? 131071 : 524287);
+      if (isSetAddress())
+        hashCode = hashCode * 8191 + address.hashCode();
 
       return hashCode;
     }
@@ -2783,6 +3137,26 @@ public class UserServiceThrift {
       }
       if (isSetEmail()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.email, other.email);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetPhone(), other.isSetPhone());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPhone()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.phone, other.phone);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.compare(isSetAddress(), other.isSetAddress());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAddress()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.address, other.address);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2828,6 +3202,22 @@ public class UserServiceThrift {
         sb.append("null");
       } else {
         sb.append(this.email);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("phone:");
+      if (this.phone == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.phone);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("address:");
+      if (this.address == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.address);
       }
       first = false;
       sb.append(")");
@@ -2901,6 +3291,22 @@ public class UserServiceThrift {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 4: // PHONE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.phone = iprot.readString();
+                struct.setPhoneIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 5: // ADDRESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.address = iprot.readString();
+                struct.setAddressIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2928,6 +3334,16 @@ public class UserServiceThrift {
         if (struct.email != null) {
           oprot.writeFieldBegin(EMAIL_FIELD_DESC);
           oprot.writeString(struct.email);
+          oprot.writeFieldEnd();
+        }
+        if (struct.phone != null) {
+          oprot.writeFieldBegin(PHONE_FIELD_DESC);
+          oprot.writeString(struct.phone);
+          oprot.writeFieldEnd();
+        }
+        if (struct.address != null) {
+          oprot.writeFieldBegin(ADDRESS_FIELD_DESC);
+          oprot.writeString(struct.address);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -2958,7 +3374,13 @@ public class UserServiceThrift {
         if (struct.isSetEmail()) {
           optionals.set(2);
         }
-        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetPhone()) {
+          optionals.set(3);
+        }
+        if (struct.isSetAddress()) {
+          optionals.set(4);
+        }
+        oprot.writeBitSet(optionals, 5);
         if (struct.isSetId()) {
           oprot.writeI32(struct.id);
         }
@@ -2968,12 +3390,18 @@ public class UserServiceThrift {
         if (struct.isSetEmail()) {
           oprot.writeString(struct.email);
         }
+        if (struct.isSetPhone()) {
+          oprot.writeString(struct.phone);
+        }
+        if (struct.isSetAddress()) {
+          oprot.writeString(struct.address);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, updateUser_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(3);
+        java.util.BitSet incoming = iprot.readBitSet(5);
         if (incoming.get(0)) {
           struct.id = iprot.readI32();
           struct.setIdIsSet(true);
@@ -2985,6 +3413,14 @@ public class UserServiceThrift {
         if (incoming.get(2)) {
           struct.email = iprot.readString();
           struct.setEmailIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.phone = iprot.readString();
+          struct.setPhoneIsSet(true);
+        }
+        if (incoming.get(4)) {
+          struct.address = iprot.readString();
+          struct.setAddressIsSet(true);
         }
       }
     }
