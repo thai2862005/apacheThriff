@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8d7da;
+            color: #721c24;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .error-container {
+            background: #fff;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 32px 48px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 16px;
+            font-size: 2em;
+        }
+        p {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Error</h1>
+        <p><%= message || 'An unexpected error occurred.' %></p>
+        <% if (error && error.status) { %>
+            <p>Status: <%= error.status %></p>
+        <% } %>
+        <% if (error && error.stack) { %>
+            <pre><%= error.stack %></pre>
+        <% } %>
+    </div>
+</body>
+</html>

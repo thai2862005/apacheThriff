@@ -1,15 +1,6 @@
 import client from "../Sever/thriffClient";
 import { Request, Response } from "express";
-const getUsersPage = async (req: Request, res: Response) => {
-  try {
-    const user = await client.createUser("Alice", "alice@example.com","1234567890","123 Main St");
 
-    res.render("users", { user });
-  } catch (err) {
-    console.error("Error:", err);
-    res.render("error", { message: err.message });
-  }
-};
 
 const createUser = async (req: Request, res: Response) => {
   const { name, email, phone, address } = req.body;
@@ -54,7 +45,7 @@ const createUser = async (req: Request, res: Response) => {
   const getALLUsers = async (req: Request, res: Response) => {
     try {
       const users = await client.getAllUsers();
-      res.render("users", { users });
+      res.render("home", { users });
     } catch (err) {
       res.render("error", { message: err.message });
     }
@@ -72,4 +63,4 @@ const createUser = async (req: Request, res: Response) => {
     }
   }
 
-export { getUsersPage, createUser, getUserById, deleteUser, updateUser, getALLUsers, UserPagedPanigation };
+export { createUser, getUserById, deleteUser, updateUser, getALLUsers, UserPagedPanigation };
