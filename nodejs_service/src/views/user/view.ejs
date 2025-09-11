@@ -26,37 +26,41 @@
             <h4 class="mb-0"><i class="fa fa-user"></i> User Detail</h4>
           </div>
           <div class="card-body">
-            <form>
+            <form action="/users/update/<%= user.id %>" method="post">
               <!-- Name -->
               <div class="mb-3">
                 <label class="form-label fw-semibold">Full Name</label>
-                <input type="text" class="form-control" value="<%= user.name %>" readonly>
+                <input type="text" class="form-control" name="name" value="<%= user.name %>" required>
               </div>
 
               <!-- Email -->
               <div class="mb-3">
                 <label class="form-label fw-semibold">Email</label>
-                <input type="email" class="form-control" value="<%= user.email %>" readonly>
+                <input type="email" class="form-control" name="email" value="<%= user.email %>" required>
               </div>
 
               <!-- Phone + Address -->
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label fw-semibold">Phone</label>
-                  <input type="text" class="form-control" value="<%= user.phone %>" readonly>
+                  <input type="text" class="form-control" name="phone" value="<%= user.phone %>" required>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label fw-semibold">Address</label>
-                  <input type="text" class="form-control" value="<%= user.address %>" readonly>
+                  <input type="text" class="form-control" name="address" value="<%= user.address %>" required>
                 </div>
               </div>
 
               <!-- Back button -->
-              <div class="text-center">
+              <div class="text-center d-flex">
                 <a href="/users" class="btn btn-secondary px-4">
                   <i class="fa fa-arrow-left"></i> Back
                 </a>
+                <button type="submit" class="btn btn-primary px-4 ms-2">
+                  <i class="fa fa-check"></i> Update
+                </button>
               </div>
+            
             </form>
           </div>
       </main>

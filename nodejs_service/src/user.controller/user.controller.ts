@@ -8,7 +8,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const user = await client.createUser(name, email, phone, address);
     res.redirect("/"); // sau khi tạo xong quay lại trang danh sách
-  } catch (err) {
+  } catch (err) { 
     res.render("error", { message: err.message });
   }
 };
@@ -40,9 +40,9 @@ const createUser = async (req: Request, res: Response) => {
 
   const updateUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
-    const { name, email } = req.body;
+    const { name, email , phone, address } = req.body;
     try {
-      const user = await client.updateUser(parseInt(userId), name, email);
+      const user = await client.updateUser(parseInt(userId), name, email, phone, address);
       res.redirect("/users");
     } catch (err) {
       res.render("error", { message: err.message });
