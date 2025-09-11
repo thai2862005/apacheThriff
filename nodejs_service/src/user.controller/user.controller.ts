@@ -7,7 +7,7 @@ const createUser = async (req: Request, res: Response) => {
   const { name, email, phone, address } = req.body;
   try {
     const user = await client.createUser(name, email, phone, address);
-    res.redirect("/"); // sau khi tạo xong quay lại trang danh sách
+    res.redirect("/users"); 
   } catch (err) { 
     res.render("error", { message: err.message });
   }
@@ -23,10 +23,7 @@ const createUser = async (req: Request, res: Response) => {
     }
   }
 
-  const getUserPage = async (req: Request, res: Response) => {
-    const users = await client.getAllUsers();
-    return res.render("user/show", { users });
-  }
+  
 
   const deleteUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
@@ -48,14 +45,31 @@ const createUser = async (req: Request, res: Response) => {
       res.render("error", { message: err.message });
     }
   }
-  const getALLUsers = async (req: Request, res: Response) => {
-    try {
-      const users = await client.getAllUsers();
-      res.render("home", { users });
-    } catch (err) {
-      res.render("error", { message: err.message });
-    }
+const getALLUsers = async (req: Request, res: Response) => {
+  let page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.pageSize as string) || 3;
+  try {
+    const users = await client.getAllUsers();
+    const totalCount = users.length;
+    const totalPages = Math.ceil(totalCount / pageSize);
+    if (page > totalPages) page = totalPages;
+    if (page < 1) page = 1;
+    const skip = (page - 1) * pageSize;
+    const endIndex = skip + pageSize;
+    //skip + pageSize = end (vị trí kết thúc) ,vì tổng số lượng phần tử lấy ra là pageSize nên vị trí kết thúc sẽ là skip + pageSize
+    const paginatedUsers = users.slice(skip, endIndex);
+//slice dùng để cắt mảng từ vị trí skip đến vị trí end (không bao gồm end)
+    res.render("user/show", { 
+      users: paginatedUsers,
+      currentPage: page,
+      pageSize,
+      totalPages
+    });
+  } catch (err: any) {
+    res.render("error", { message: err.message });
   }
+};
+
 
   const getCreateUserPage = async (req: Request, res: Response) => {
     res.render("user/create");
@@ -63,24 +77,15 @@ const createUser = async (req: Request, res: Response) => {
 
 
   const UserPagedPanigation = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 1;
-  const pageSize = parseInt(req.query.pageSize as string) || 10;
-
   try {
-    // Lấy data và totalCount từ service hoặc DB
-    const { totalCount } = await client.getUsersPaged(page, pageSize);
     const user = await client.getAllUsers()
-    const totalPages = Math.ceil(totalCount / pageSize);
 
     res.render("dashboard/show", {
       user,
-      currentPage: page,
-      pageSize,
-      totalPages,
     });
   } catch (err: any) {
     res.render("error", { message: err.message });
   }
 };
 
-export { createUser, getUserById, deleteUser, updateUser, getALLUsers, UserPagedPanigation , getUserPage, getCreateUserPage};
+export { createUser, getUserById, deleteUser, updateUser, getALLUsers, UserPagedPanigation , getCreateUserPage};

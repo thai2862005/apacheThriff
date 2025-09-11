@@ -36,12 +36,6 @@
     <div class="error-container">
         <h1>Error</h1>
         <p><%= message || 'An unexpected error occurred.' %></p>
-        <% if (error && error.status) { %>
-            <p>Status: <%= error.status %></p>
-        <% } %>
-        <% if (error && error.stack) { %>
-            <pre><%= error.stack %></pre>
-        <% } %>
     </div>
 </body>
 </html>

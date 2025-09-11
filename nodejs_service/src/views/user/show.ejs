@@ -72,7 +72,24 @@
                     </div>
                 </div>
                     </main>
-                   
+                   <nav>
+  <ul class="pagination justify-content-center">
+    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+      <a class="page-link" 
+         href="/users?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>">Previous</a>
+    </li>
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+        <a class="page-link" href="/users?page=<%= i %>&pageSize=<%= pageSize %>"><%= i %></a>
+      </li>
+    <% } %>
+    <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+      <a class="page-link" 
+         href="/users?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>">Next</a>
+    </li>
+  </ul>
+</nav>
+
                     <%- include('../layout/footer'); -%>
                 </div>
         </div>
