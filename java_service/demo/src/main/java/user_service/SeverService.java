@@ -8,7 +8,7 @@ import org.apache.thrift.transport.TServerTransport;
 public class SeverService {
     public static void main(String[] args) {
         try {
-            UserServiceHandler handler = new UserServiceHandler();
+                    UserServiceHandler handler = new UserServiceHandler();
 
             UserServiceThrift.Processor<UserServiceThrift.Iface> processor =
                     new UserServiceThrift.Processor<>(handler);

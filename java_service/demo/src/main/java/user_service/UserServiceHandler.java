@@ -1,4 +1,4 @@
-package user_service;
+    package user_service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,8 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
         thriftUser.setId(user.getId().intValue()); // JPA id thường là Long
         thriftUser.setName(user.getName());
         thriftUser.setEmail(user.getEmail());
+        thriftUser.setPhone(user.getPhone());       // thêm
+        thriftUser.setAddress(user.getAddress());   // thêm
         return thriftUser;
     }
 
@@ -47,7 +49,6 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
                 result = convertToThrift(existing);
 
             } catch (NoResultException e) {
-                // ✅ Nếu chưa có -> thêm mới
                 User user = new User(name, email, phone, address);
                 em.persist(user);
                 em.getTransaction().commit();
@@ -85,6 +86,8 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
             if (user != null) {
                 user.setName(name);
                 user.setEmail(email);
+                user.setPhone(phone);       // fix
+                user.setAddress(address);   // fix
                 em.merge(user);
                 result = convertToThrift(user);
             }
@@ -112,28 +115,26 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
         }
         return deleted;
     }
-    
+
     @Override
-public List<user_service.User> getAllUsers() throws TException {
-    EntityManager em = emf.createEntityManager();
-    List<user_service.User> result = new ArrayList<>();
+    public List<user_service.User> getAllUsers() throws TException {
+        EntityManager em = emf.createEntityManager();
+        List<user_service.User> result = new ArrayList<>();
 
-    try {
-        List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        try {
+            List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
 
-        for (User u : users) {
-            user_service.User thriftUser = new user_service.User();
-            thriftUser.setId(u.getId().intValue()); // ép Long → int
-            thriftUser.setName(u.getName());
-            thriftUser.setEmail(u.getEmail());
-            result.add(thriftUser);
+            for (User u : users) {
+                result.add(convertToThrift(u));
+            }
+        } finally {
+            em.close();
         }
-    } finally {
-        em.close();
+
+        return result;
     }
 
-    return result;
-}
+    @Override
     public List<user_service.User> getUsersPaged(int page, int pageSize) throws TException {
         EntityManager em = emf.createEntityManager();
         List<user_service.User> result = new ArrayList<>();
@@ -145,11 +146,7 @@ public List<user_service.User> getAllUsers() throws TException {
                     .getResultList();
 
             for (User u : users) {
-                user_service.User thriftUser = new user_service.User();
-                thriftUser.setId(u.getId().intValue()); // ép Long → int
-                thriftUser.setName(u.getName());
-                thriftUser.setEmail(u.getEmail());
-                result.add(thriftUser);
+                result.add(convertToThrift(u));
             }
         } finally {
             em.close();
@@ -157,5 +154,4 @@ public List<user_service.User> getAllUsers() throws TException {
 
         return result;
     }
-    
 }
