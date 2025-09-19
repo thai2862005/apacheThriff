@@ -19,14 +19,13 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
         this.emf = Persistence.createEntityManagerFactory("my-persistence-unit");
     }
 
-    // Helper convert Entity -> Thrift
     private user_service.User convertToThrift(User user) {
         user_service.User thriftUser = new user_service.User();
-        thriftUser.setId(user.getId().intValue()); // JPA id thường là Long
+        thriftUser.setId(user.getId().intValue()); 
         thriftUser.setName(user.getName());
         thriftUser.setEmail(user.getEmail());
-        thriftUser.setPhone(user.getPhone());       // thêm
-        thriftUser.setAddress(user.getAddress());   // thêm
+        thriftUser.setPhone(user.getPhone());       
+        thriftUser.setAddress(user.getAddress());  
         return thriftUser;
     }
 
@@ -38,13 +37,11 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
             em.getTransaction().begin();
 
             try {
-                // 🔎 Check email tồn tại chưa
                 User existing = em.createQuery(
                         "SELECT u FROM User u WHERE u.email = :email", User.class)
                         .setParameter("email", email)
                         .getSingleResult();
 
-                // Rollback nếu tồn tại
                 em.getTransaction().rollback();
                 result = convertToThrift(existing);
 
@@ -86,8 +83,8 @@ public class UserServiceHandler implements UserServiceThrift.Iface {
             if (user != null) {
                 user.setName(name);
                 user.setEmail(email);
-                user.setPhone(phone);       // fix
-                user.setAddress(address);   // fix
+                user.setPhone(phone);       
+                user.setAddress(address);   
                 em.merge(user);
                 result = convertToThrift(user);
             }

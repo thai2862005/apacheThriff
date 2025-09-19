@@ -7,6 +7,7 @@ const createUser = async (req: Request, res: Response) => {
   const { name, email, phone, address } = req.body;
   try {
     const user = await client.createUser(name, email, phone, address);
+    console.log("created user:", user);
     res.redirect("/users"); 
   } catch (err) { 
     res.render("error", { message: err.message });
@@ -17,6 +18,7 @@ const createUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
     try {
       const user = await client.getUserById(parseInt(userId));
+      console.log("user by id:", user);
       res.render("user/view", { user });
     } catch (err) {
       res.render("error", { message: err.message });
@@ -29,7 +31,8 @@ const createUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
     try {
       const user = await client.deleteUser(parseInt(userId));
-      res.redirect("/users");
+      console.log("deleted user:", user);
+      res.redirect("/");
     } catch (err) {
       res.render("error", { message: err.message });
     }
@@ -40,7 +43,8 @@ const createUser = async (req: Request, res: Response) => {
     const { name, email , phone, address } = req.body;
     try {
       const user = await client.updateUser(parseInt(userId), name, email, phone, address);
-      res.redirect("/users");
+      console.log("updated user:", user);
+      res.redirect("/");
     } catch (err) {
       res.render("error", { message: err.message });
     }

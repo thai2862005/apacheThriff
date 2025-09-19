@@ -5,8 +5,7 @@ import { createUser, deleteUser, getALLUsers, getCreateUserPage, getUserById,  u
 const router = express.Router();
 
 const webRouter = (app: Express) => { 
-    router.get("/",UserPagedPanigation);
-    router.get("/users",getALLUsers);
+    router.get("/",getALLUsers);
     router.post("/users/delete/:id", deleteUser);
     router.post("/users/update/:id", updateUser);
     router.get("/users/create", getCreateUserPage);

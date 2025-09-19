@@ -20,7 +20,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(length = 20) // số điện thoại có thể giới hạn 20 ký tự
+    @Column(length = 20) 
     private String phone;
 
     @Column(length = 255)
