@@ -8,7 +8,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const user = await client.createUser(name, email, phone, address);
     console.log("created user:", user);
-    res.redirect("/users"); 
+    res.redirect("/"); 
   } catch (err) { 
     res.render("error", { message: err.message });
   }
@@ -31,7 +31,7 @@ const createUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
     try {
       const user = await client.deleteUser(parseInt(userId));
-      console.log("deleted user:", user);
+      console.log("deleted user have Id:", userId, "state :",user);
       res.redirect("/");
     } catch (err) {
       res.render("error", { message: err.message });
@@ -54,6 +54,7 @@ const getALLUsers = async (req: Request, res: Response) => {
   const pageSize = parseInt(req.query.pageSize as string) || 3;
   try {
     const users = await client.getAllUsers();
+    console.log("all users:", users);
     const totalCount = users.length;
     const totalPages = Math.ceil(totalCount / pageSize);
     if (page > totalPages) page = totalPages;

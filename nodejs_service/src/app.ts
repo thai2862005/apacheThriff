@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import express from 'express';
 import webRouter from './router/wed';
+import webRouterApi from './router/api';
 const app = express();
 
 // config view engine
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 webRouter(app);
+webRouterApi(app);
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`✅ Server is running on http://localhost:${port}`);

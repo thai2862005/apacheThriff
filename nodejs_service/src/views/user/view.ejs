@@ -25,7 +25,7 @@
         <h5 class="mb-0"><i class="fa fa-user-plus me-2"></i>View User</h5>
       </div>
       <div class="card-body">
-        <form action="/users/handle-create" method="post">
+        <form action="/users/update/<%= user.id %>" method="post">
 
           <div class="mb-3">
             <label class="form-label fw-semibold">Full Name</label>
@@ -51,10 +51,10 @@
           <!-- Action -->
           <div class="text-center">
             <button type="submit" class="btn btn-success px-4">
-              <i class="fa fa-check"></i> Submit
+              <i class="fa fa-check"></i> Update
             </button>
             <a href="/" class="btn btn-secondary px-4 ms-2">
-              <i class="fa fa-undo"></i> Reset
+              <i class="fa fa-undo"></i> Cancel
             </a>
           </div>
         </form>
